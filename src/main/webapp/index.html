@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>String Manipulation Service</title>
+    <style>
+        /* Your CSS styles */
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>String Manipulation Service</h1>
+    <input type="text" id="inputString" placeholder="Enter text">
+    <button id="reverseBtn">Reverse</button>
+    <button id="countBtn">Count Characters</button>
+    <div class="result" id="result"></div>
+</div>
+
+<script>
+    const serviceURL = 'http://localhost:8080/StringManipulationService_war/stringService';
+
+    // Define functions first
+    function reverseText() {
+        const input = document.getElementById('inputString').value;
+        const soapRequest = `
+                <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+                                  xmlns:ser="http://example.com/">
+                    <soapenv:Header/>
+                    <soapenv:Body>
+                        <ser:reverseText>
+                            <text>${input}</text>
+                        </ser:reverseText>
+                    </soapenv:Body>
+                </soapenv:Envelope>
+            `;
+        sendRequest(soapRequest, 'reverseTextResponse');
+    }
+
+    function countCharacters() {
+        const input = document.getElementById('inputString').value;
+        const soapRequest = `
+                <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+                                  xmlns:ser="http://example.com/">
+                    <soapenv:Header/>
+                    <soapenv:Body>
+                        <ser:countCharacters>
+                            <text>${input}</text>
+                        </ser:countCharacters>
+                    </soapenv:Body>
+                </soapenv:Envelope>
+            `;
+        sendRequest(soapRequest, 'countCharactersResponse');
+    }
+
+    // Attach event listeners
+    document.getElementById('reverseBtn').addEventListener('click', reverseText);
+    document.getElementById('countBtn').addEventListener('click', countCharacters);
+
+    // sendRequest function remains the same
+</script>
+</body>
+</html>
